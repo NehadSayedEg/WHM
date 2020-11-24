@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">WHM</string>
+    <!--Recycler adapter arrays-->
+    <string-array name="stores_names">
+        <item> Store 1</item>
+        <item> Store 2</item>
+        <item> Store 3</item>
+    </string-array>
+
+    <string-array name="description">
+        <item> Main Store</item>
+        <item> Material Store</item>
+        <item> Finsh Goods Store</item>
+    </string-array>
+    <string-array name="items_name">
+        <item> item 1</item>
+        <item> item 2</item>
+        <item> item 3</item>
+    </string-array>
+    <string-array name="item_description">
+        <item> Small Box </item>
+        <item> Medium Box </item>
+        <item> Large Box </item>
+    </string-array>
+    <string-array name="Weights">
+        <item> 100 kilo</item>
+        <item> 200 kilo</item>
+    </string-array>
+    <string-array name="dates">
+        <item> 11-2-2020</item>
+        <item> 12-2-2020</item>
+    </string-array>
+
+    <!--Spinner-->
+    <string-array name="select_issue_type">
+        <item>Select Issue Type</item>
+        <item> Issue to sales</item>
+        <item> isssue to production</item>
+        <item> issue samples</item>
+    </string-array>
+
+    <string-array name="select_store">
+        <item>Select Store Type</item>
+        <item> Store1</item>
+        <item> Store2</item>
+        <item> Store3</item>
+    </string-array>
+
+    <string-array name="select_Bin">
+        <item>Select Bin</item>
+        <item> Bin1</item>
+        <item> Bin2</item>
+        <item> Bin3</item>
+    </string-array>
+
+    <string-array name="select_receive_type">
+        <item>Select Receive Type</item>
+        <item> Select from Vendor</item>
+        <item> Select from production</item>
+        <item> Slect from Return</item>
+    </string-array>
+
+    <string-array name="select_transfer_type">
+        <item>Select Transfer Type</item>
+        <item> Select Between Stores</item>
+    </string-array>
+
+    <string-array name="select_store_from">
+        <item>Select Store From</item>
+        <item> Store 1</item>
+        <item>Store 2 </item>
+    </string-array>
+
+    <string-array name="select_bin_from">
+        <item>Select Bin From</item>
+        <item> Bin 1</item>
+        <item> Bin 2</item>
+    </string-array>
+
+    <string-array name="select_bin_to">
+        <item> Select Bin To </item>
+        <item> Bin 1</item>
+        <item> Bin 2</item>
+    </string-array>
+
+
+</resources>

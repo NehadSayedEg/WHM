@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.whm">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WHM">
+        <activity android:name=".UI.StockTranActivity.StockTranActivity"></activity>
+        <activity android:name=".StockRecActivity" />
+        <activity android:name=".StockIssueActivity" />
+        <activity android:name=".UI.LoginActivity.LoginActivity$BalancesActivity" />
+        <activity android:name=".UI.ItemsActivity.ItemsActivity" />
+        <activity android:name=".UI.StoresActivity.StoresActivity" />
+        <activity android:name=".ui.StoresActivity" />
+        <activity android:name=".UI.HomeActivity.HomeActivity" />
+        <activity android:name=".UI.LoginActivity.LoginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".UI.MainActivity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
