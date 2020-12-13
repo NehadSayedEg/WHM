@@ -1,39 +1,68 @@
 package com.example.whm.Model;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+@Entity(tableName = "item_table")
+public class Item {
 
-public class Items {
-
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name ="item_id")
     @SerializedName("item_id")
     @Expose
+    @NonNull
     private String itemId;
+
+    @ColumnInfo(name ="item_name_en")
     @SerializedName("item_name_en")
     @Expose
     private String itemNameEn;
+
+    @ColumnInfo(name ="item_name_ar")
     @SerializedName("item_name_ar")
     @Expose
     private String itemNameAr;
+
+    @ColumnInfo(name ="item_type_id")
     @SerializedName("item_type_id")
     @Expose
     private String itemTypeId;
+
+    @ColumnInfo(name ="item_category")
     @SerializedName("item_category")
     @Expose
     private String itemCategory;
+
+    @ColumnInfo(name ="item_class")
     @SerializedName("item_class")
     @Expose
     private String itemClass;
+
+
+    @ColumnInfo(name ="created_by")
     @SerializedName("created_by")
     @Expose
     private String createdBy;
+
+    @ColumnInfo(name ="created_date")
     @SerializedName("created_date")
     @Expose
     private String createdDate;
+
+    @ColumnInfo(name ="sync_status")
     @SerializedName("sync_status")
     @Expose
     private String syncStatus;
+
+    @ColumnInfo(name ="sync_update_status")
     @SerializedName("sync_update_status")
     @Expose
     private String syncUpdateStatus;
+
 
     public String getItemId() {
         return itemId;

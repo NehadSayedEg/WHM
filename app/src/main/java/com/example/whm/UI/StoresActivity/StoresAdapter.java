@@ -8,22 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.whm.Model.Stores;
+import com.example.whm.Model.Users;
 import com.example.whm.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresViewHolder>{
 
     //private ArrayList<Stores> storesList = new ArrayList<>();
-    private List<Stores> storesList ;
+    private List<Users> storesList ;
     Context context;
 
-    public StoresAdapter(List<Stores> storesList, Context context) {
+    public StoresAdapter(List<Users> storesList, Context context) {
         this.storesList = storesList;
         this.context =  context;
     }
@@ -40,9 +38,9 @@ public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresView
 
     @Override
     public void onBindViewHolder(@NonNull StoresViewHolder holder, int position) {
-        Stores stores = storesList.get(position);
-        holder.store_id_tv.setText(storesList.get(position).getStoreId());
-        holder.store_name_en_tv.setText(storesList.get(position).getStoreId());
+       // Stores stores = storesList.get(position);
+//        holder.store_id_tv.setText(storesList.get(position).getUserId());
+        holder.store_name_en_tv.setText(storesList.get(position).getUserNameEn());
 
 
         // holder.store_name_en_tv.setText(data1[position]);
@@ -57,7 +55,7 @@ public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresView
     }
 
 
-    public void setStoresList(List<Stores>storesList){
+    public void setStoresList(List<Users>storesList){
         this.storesList = storesList;
         notifyDataSetChanged();
 

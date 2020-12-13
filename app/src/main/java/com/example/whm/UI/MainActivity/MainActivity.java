@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import com.example.whm.R;
 import com.example.whm.RegisterActivity;
+import com.example.whm.UI.LoginActivity.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 1000;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
 
                 // close this activity

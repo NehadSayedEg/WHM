@@ -7,13 +7,14 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.whm.Database.Repository.StoresRepository;
-import com.example.whm.Model.Stores;
+import com.example.whm.Model.Store;
+import com.example.whm.Model.Users;
 
 import java.util.List;
 
 public class StoresViewModel1 extends AndroidViewModel {
     private StoresRepository storesRepository ;
-    private LiveData<List<Stores>> getAllStores ;
+    private LiveData<List<Store>> getAllStores ;
 
     public StoresViewModel1(@NonNull Application application) {
         super(application);
@@ -23,10 +24,10 @@ public class StoresViewModel1 extends AndroidViewModel {
 
     }
 
-    public void insert(List<Stores> storesList) {
+    public void insert(List<Store> storesList) {
         storesRepository.insert(storesList);
     }
-    public LiveData<List<Stores>>getAllStores(){
+    public LiveData<List<Store>>getAllStores(){
         return getAllStores;
 
     }

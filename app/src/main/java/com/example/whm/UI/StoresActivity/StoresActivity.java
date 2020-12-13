@@ -2,7 +2,6 @@ package com.example.whm.UI.StoresActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.whm.Database.Repository.StoresRepository;
-import com.example.whm.Model.Stores;
+import com.example.whm.Model.Users;
 import com.example.whm.Network.ApiService;
 import com.example.whm.R;
 
@@ -33,7 +32,7 @@ public class StoresActivity extends AppCompatActivity {
     StoresRepository storesRepository ;
     RecyclerView recyclerView ;
     StoresAdapter storesAdapter ;
-    List<Stores> storesList ;
+    List<Users> storesList ;
     public static final String  BaseUrl ="http://whm.signaturegypt.com/api/sync/synctophone/";
     private ApiService apiService ;
 
@@ -58,36 +57,36 @@ public class StoresActivity extends AppCompatActivity {
         storesAdapter = new StoresAdapter(storesList , this);
 
 
-        storesViewModel1  = ViewModelProviders.of(this).get(StoresViewModel1.class);
-
-
-
-
-//        storesViewModel1  = new ViewModelProvider(this).get(StoresViewModel1.class);
-        storesViewModel1.getAllStores().observe(this, new Observer<List<Stores>>() {
-            @Override
-            public void onChanged(List<Stores> storesList) {
-                 storesAdapter.setStoresList(storesList);
-//                Toast.makeText(StoresActivity.this, " sss ", Toast.LENGTH_LONG).show();
-                recyclerView.setAdapter( storesAdapter);
-                Log.d("Stores Activity" , "Data reached" + storesList);
-            }
-        });
-        
-        networkRequest();
+//        storesViewModel1  = ViewModelProviders.of(this).get(StoresViewModel1.class);
+//
+//
+//
+//
+////        storesViewModel1  = new ViewModelProvider(this).get(StoresViewModel1.class);
+//        storesViewModel1.getAllStores().observe(this, new Observer<List<Users>>() {
+//            @Override
+//            public void onChanged(List<Users> storesList) {
+//                 storesAdapter.setStoresList(storesList);
+////                Toast.makeText(StoresActivity.this, " sss ", Toast.LENGTH_LONG).show();
+//                recyclerView.setAdapter( storesAdapter);
+//                Log.d("Stores Activity" , "Data reached" + storesList);
+//            }
+//        });
+//
+//        networkRequest();
 
 
 //        storesViewModel = ViewModelProviders.of(this).get(StoresViewModel.class);
 //        storesViewModel.getStores();
 //
 //       recyclerView = findViewById(R.id.stores_recyclerView);
-//       StoresAdapter storesAdapter = new StoresAdapter();
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this ));
+//            storesAdapter.setStoresList(storesList);
+//            recyclerView.setLayoutManager(new LinearLayoutManager(this ));
 //        recyclerView.setAdapter(storesAdapter);
-//        storesViewModel.storesMutableLiveData.observe(this, new Observer<List<Stores>>() {
+//        storesViewModel.storesMutableLiveData.observe(this, new Observer<List<Users>>() {
 //            @Override
-//            public void onChanged(List<Stores> stores) {
-//                storesAdapter.setStoresList((ArrayList<Stores>) stores);
+//            public void onChanged(List<Users> stores) {
+//                storesAdapter.setStoresList((ArrayList<Users>) stores);
 //            }
 //        });
 
@@ -109,26 +108,26 @@ public class StoresActivity extends AppCompatActivity {
 
         apiService = retrofit.create(ApiService.class);
 
-         Call<List<Stores>> callstores = apiService.getStores();
-        callstores.enqueue(new Callback<List<Stores>>() {
-            @Override
-            public void onResponse(Call<List<Stores>> call, Response<List<Stores>> response) {
-                if(response.isSuccessful()){
-                    Log.d("In the Response_______" ," @@@@@@@@@@@");
-                    storesRepository.insert(response.body());
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Stores>> call, Throwable t) {
-                     Toast.makeText(StoresActivity.this , "some thing went wrong   in the failure ",Toast.LENGTH_LONG).show();
-                Log.d("In the Failure _______" ," @@@@@@@@@@@");
-
-
-            }
-        });
+//         Call<List<Users>> callstores = apiService.getUsers();
+//        callstores.enqueue(new Callback<List<Users>>() {
+//            @Override
+//            public void onResponse(Call<List<Users>> call, Response<List<Users>> response) {
+//                if(response.isSuccessful()){
+//                    Log.d("In the Response_______" ," @@@@@@@@@@@");
+//                    storesRepository.insert(response.body());
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Users>> call, Throwable t) {
+//                     Toast.makeText(StoresActivity.this , "some thing went wrong   in the failure ",Toast.LENGTH_LONG).show();
+//                Log.d("In the Failure _______" ," @@@@@@@@@@@");
+//
+//
+//            }
+//        });
 
 
     }

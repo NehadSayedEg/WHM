@@ -11,10 +11,10 @@ import com.example.whm.Model.Users;
 
 import java.util.List;
 @Dao
-  public interface StoresDao {
+public interface StoreDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(List<Store> storesList);
+    void insert(List<Store> storeList);
 
     @Query("SELECT * FROM  store_table")
     LiveData<List<Store>> getAllStores();
@@ -22,5 +22,7 @@ import java.util.List;
 
     @Query("DELETE  FROM  store_table")
     void deleteAllStores();
-
 }
+
+
+

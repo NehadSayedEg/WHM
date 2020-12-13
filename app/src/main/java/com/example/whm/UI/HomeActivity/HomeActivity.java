@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
     public void to_balances(View view) {
-        Intent myIntent = new Intent(HomeActivity.this, LoginActivity.BalancesActivity.class);
+        Intent myIntent = new Intent(HomeActivity.this, LoginActivity.class);
 
         startActivity(myIntent);
     }

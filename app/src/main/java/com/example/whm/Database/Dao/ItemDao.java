@@ -6,21 +6,20 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.whm.Model.Store;
+import com.example.whm.Model.Item;
 import com.example.whm.Model.Users;
 
 import java.util.List;
 @Dao
-  public interface StoresDao {
-
+public interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(List<Store> storesList);
+    void insert(List<Item> itemsList);
 
-    @Query("SELECT * FROM  store_table")
-    LiveData<List<Store>> getAllStores();
+    @Query("SELECT * FROM  item_table")
+    LiveData<List<Item>> getAllitems();
 
 
-    @Query("DELETE  FROM  store_table")
-    void deleteAllStores();
+    @Query("DELETE  FROM  item_table")
+    void deleteAllItems();
 
 }
