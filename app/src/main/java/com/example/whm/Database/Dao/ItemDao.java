@@ -7,13 +7,18 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.whm.Model.Item;
-import com.example.whm.Model.Users;
 
 import java.util.List;
 @Dao
 public interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(List<Item> itemsList);
+    void insertItem(List<Item> itemsList);
+
+
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    Long[]  insertItem(List<Item> itemsList);
+
 
     @Query("SELECT * FROM  item_table")
     LiveData<List<Item>> getAllitems();

@@ -29,18 +29,9 @@ import com.example.whm.Model.User;
 public  abstract  class appDatabase extends RoomDatabase {
 
     public static final String  Database_Name= "WHMDatabase";
-    public  abstract  DataDao dataDao();
     public  abstract ItemDao itemDao();
     public  abstract StoreDao storeDao();
     public  abstract UserDao userDao();
-    public  abstract AllDataDao allDataDao();
-
-
-
-
-
-
-    // public  abstract  StoresDao storesDao();
 
      private static volatile appDatabase INSTANCE ;
 
@@ -52,7 +43,6 @@ public  abstract  class appDatabase extends RoomDatabase {
                              .addCallback(callback)
                              .fallbackToDestructiveMigration()
                              .build();
-
                  }
              }
          }
@@ -65,33 +55,27 @@ public  abstract  class appDatabase extends RoomDatabase {
          public void onCreate(@NonNull SupportSQLiteDatabase db) {
              super.onCreate(db);
              new PopulateAsyncTask(INSTANCE);
-
          }
      };
 
-//    public abstract DataDao dataDao();
 
     static class PopulateAsyncTask extends AsyncTask<Void ,Void,Void>{
-        private AllDataDao allDataDao ;
-        private DataDao dataDao ;
         private UserDao userDao  ;
         private ItemDao itemDao  ;
         private StoreDao storeDao  ;
 
 
         PopulateAsyncTask(appDatabase appDatabase){
-            allDataDao  = appDatabase.allDataDao();
-             dataDao =appDatabase.dataDao();
             itemDao  =appDatabase.itemDao();
             userDao =appDatabase.userDao();
             storeDao= appDatabase.storeDao();
-
-
-
          }
+
          @Override
          protected Void doInBackground(Void... voids) {
-             dataDao.deleteAllStores();
+             itemDao.deleteAllItems();
+             userDao.deleteAllUsers();
+             storeDao.deleteAllStores();
              return null;
          }
      }

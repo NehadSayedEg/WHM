@@ -3,12 +3,14 @@ package com.example.whm.UI.LoginActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.whm.Database.Dao.UserDao;
 import com.example.whm.Database.Repository.DataRepository;
+import com.example.whm.Database.appDatabase;
 import com.example.whm.Model.AllData;
 import com.example.whm.Model.User;
 import com.example.whm.Model.Users;
@@ -53,43 +56,68 @@ public class LoginActivity extends AppCompatActivity {
         textViewRegister = findViewById(R.id.textViewRegister);
 
 
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        //loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+      //  loginViewModel  = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel = ViewModelProviders.of(this, new LoginViewModel.Factory(getApplicationContext())).get(LoginViewModel.class);
+
+
+
         loginViewModel.getData();
 
 
-        loginViewModel.storesMutableLiveData.observe(this, new Observer<AllData>() {
-            @Override
-            public void onChanged(AllData allData) {
-                Toast.makeText(LoginActivity.this, " Data reached", Toast.LENGTH_LONG).show();
-            }
-        });
+
+
+//        loginViewModel.storesMutableLiveData.observe(this, new Observer<AllData>() {
+//            @Override
+//            public void onChanged(AllData allData) {
+//                Toast.makeText(LoginActivity.this, " Data reached", Toast.LENGTH_LONG).show();
+//            }
+//        });
+
+//        buttonLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//
+//                String username = editTextUserName.getText().toString();
+//                String password = editTextPassword.getText().toString();
+//
+//                if(username.isEmpty() || password.isEmpty()){
+//                    Toast.makeText(getApplicationContext() , "Fill all the fields" , Toast.LENGTH_LONG).show();
+//                }else {
+//
+//                    userDao.loginUser(username ,password );
+//                      startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//
+//
+//                }
+//
+//
+//            }
+//        });
+
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = editTextUserName.getText().toString();
-                String password = editTextPassword.getText().toString();
-
-                if(username.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getApplicationContext() , "Fill all the fields" , Toast.LENGTH_LONG).show();
-                }else {
-                    userDao.loginUser(username ,password );
-                      startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
 
 
-
-
-
-
-
-
-
-
+                boolean isValid = loginViewModel.checkValidLogin(editTextUserName.getText().toString(), editTextPassword.getText().toString());
+                if(isValid)
+                {
+                    Toast.makeText(getBaseContext(), "Successfully Logged In!", Toast.LENGTH_LONG).show();
+                    Log.i("Successful_Login", "Login was successful");
                 }
-
-
+                else
+                {
+                    Toast.makeText(getBaseContext(), "Invalid Login!", Toast.LENGTH_SHORT).show();
+                    Log.i("Unsuccessful_Login", "Login was not successful");
+                }
             }
         });
+
     }
 
 

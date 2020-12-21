@@ -16,15 +16,34 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<User> userList);
 
+
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long[]  insertUser(List<User> itemsList);
+
     @Query("SELECT * FROM  user_table")
     LiveData<List<User>> getAllUsers();
+
+
+    @Query("SELECT  * FROM  user_table WHERE user_id = :id ")
+    LiveData<User>  getOneUser(String id);
+
+//    @Query("SELECT  * FROM  user_table ")
+//    LiveData<User>  getOneUser();
+
 
 
     @Query("DELETE  FROM  user_table")
     void deleteAllUsers();
 
 
-    @Query("SELECT  * FROM  user_table WHERE user_name_en =  :username  and user_password = :password ")
+    @Query("SELECT  * FROM  user_table WHERE user_name_en =(:username)  and user_password =(:password)")
    User loginUser(String username , String password);
+
+    @Query("SELECT * FROM user_table WHERE user_table.user_name_en LIKE :username")
+    User getAccount(String username);
+
+
 
 }

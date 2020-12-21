@@ -1,4 +1,4 @@
-package com.example.whm.UI.StoresActivity;
+package com.example.whm.UI.ItemsActivity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,62 +10,66 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.whm.Model.Item;
 import com.example.whm.Model.Store;
-import com.example.whm.Model.Users;
 import com.example.whm.R;
 
 import java.util.List;
 
-public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresViewHolder>{
+
+public class ItemsAdapter extends RecyclerView.Adapter<com.example.whm.UI.ItemsActivity.ItemsAdapter.ItemsViewHolder>{
 
     //private ArrayList<Stores> storesList = new ArrayList<>();
-    private List<Store> storesList ;
+     List<Item> itemList ;
     Context context;
 
-    public StoresAdapter(List<Store> storesList, Context context) {
-        this.storesList = storesList;
+    public ItemsAdapter(List<Item> itemList, Context context) {
+        this.itemList = itemList;
         this.context =  context;
     }
 
     @NonNull
     @Override
-    public StoresViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public com.example.whm.UI.ItemsActivity.ItemsAdapter.ItemsViewHolder  onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.store_item, parent,  false);
-        return new StoresViewHolder(view);
+        View view = inflater.inflate(R.layout.item_item, parent,  false);
+        return new ItemsAdapter.ItemsViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StoresViewHolder holder, int position) {
-       // Stores stores = storesList.get(position);
+    public void onBindViewHolder(@NonNull ItemsViewHolder holder, int position) {
+        // Stores stores = storesList.get(position);
 //        holder.store_id_tv.setText(storesList.get(position).getUserId());
-        holder.store_name_en_tv.setText(storesList.get(position).getStoreNameAr());
+        holder.store_name_en_tv.setText(itemList.get(position).getItemNameEn());
 
 
         // holder.store_name_en_tv.setText(data1[position]);
-       // holder.store_id_tv.setText(data2[position]);
-       // holder.store_imageView.setImageResource(images[position]) ;
+        // holder.store_id_tv.setText(data2[position]);
+        // holder.store_imageView.setImageResource(images[position]) ;
+
 
     }
+
+
 
     @Override
     public int getItemCount() {
-        return storesList.size();
+        return itemList.size();
     }
 
 
-    public void setStoresList(List<Store>storesList){
-        this.storesList = storesList;
+    public void setItemList(List<Item>itemsList){
+        this.itemList = itemsList;
         notifyDataSetChanged();
 
     }
 
-    public static class StoresViewHolder extends RecyclerView.ViewHolder{
+    public static class ItemsViewHolder extends RecyclerView.ViewHolder{
         TextView store_name_en_tv , store_id_tv;
         ImageView store_imageView;
 
-        public StoresViewHolder(@NonNull View itemView) {
+        public ItemsViewHolder(@NonNull View itemView) {
             super(itemView);
             store_name_en_tv = itemView.findViewById(R.id.store_name_en);
             store_id_tv =itemView.findViewById(R.id.store_id);

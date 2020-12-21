@@ -2,6 +2,7 @@ package com.example.whm.UI.StoresActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +13,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.whm.Database.Repository.StoresRepository;
+import com.example.whm.Model.Store;
 import com.example.whm.Model.Users;
 import com.example.whm.Network.ApiService;
 import com.example.whm.R;
+import com.example.whm.UI.LoginActivity.LoginViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,103 +35,46 @@ public class StoresActivity extends AppCompatActivity {
     StoresRepository storesRepository ;
     RecyclerView recyclerView ;
     StoresAdapter storesAdapter ;
-    List<Users> storesList ;
-    public static final String  BaseUrl ="http://whm.signaturegypt.com/api/sync/synctophone/";
-    private ApiService apiService ;
+    List<Store> storesList ;
 
 
 
-    String s1[] ,s2[];
-    int images[] = {R.drawable.stores,R.drawable.store2 ,R.drawable.stores};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores);
-           recyclerView = findViewById(R.id.stores_recyclerView);
-           recyclerView.setLayoutManager(new LinearLayoutManager(this ));
-           //recyclerView.setAdapter(storesAdapter);
-           recyclerView.setItemAnimator(new DefaultItemAnimator());
-           recyclerView.setHasFixedSize(true);
-           storesList =  new ArrayList<>();
-
-           storesRepository = new StoresRepository(getApplication());
-        storesAdapter = new StoresAdapter(storesList , this);
-
-
-//        storesViewModel1  = ViewModelProviders.of(this).get(StoresViewModel1.class);
-//
-//
-//
-//
-////        storesViewModel1  = new ViewModelProvider(this).get(StoresViewModel1.class);
-//        storesViewModel1.getAllStores().observe(this, new Observer<List<Users>>() {
-//            @Override
-//            public void onChanged(List<Users> storesList) {
-//                 storesAdapter.setStoresList(storesList);
-////                Toast.makeText(StoresActivity.this, " sss ", Toast.LENGTH_LONG).show();
-//                recyclerView.setAdapter( storesAdapter);
-//                Log.d("Stores Activity" , "Data reached" + storesList);
-//            }
-//        });
-//
-//        networkRequest();
-
-
-//        storesViewModel = ViewModelProviders.of(this).get(StoresViewModel.class);
-//        storesViewModel.getStores();
-//
-//       recyclerView = findViewById(R.id.stores_recyclerView);
-//            storesAdapter.setStoresList(storesList);
-//            recyclerView.setLayoutManager(new LinearLayoutManager(this ));
-//        recyclerView.setAdapter(storesAdapter);
-//        storesViewModel.storesMutableLiveData.observe(this, new Observer<List<Users>>() {
-//            @Override
-//            public void onChanged(List<Users> stores) {
-//                storesAdapter.setStoresList((ArrayList<Users>) stores);
-//            }
-//        });
+        recyclerView = findViewById(R.id.stores_recyclerView);
+      //  storesAdapter = new StoresAdapter(this);
+        recyclerView.setAdapter(storesAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
 
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        storesList = new ArrayList<>();
+
+        storesAdapter = new StoresAdapter(storesList, this);
+       // storesViewModel1 = ViewModelProviders.of(this ).get(StoresViewModel1.class);
+        storesViewModel1  = new ViewModelProvider(this).get(StoresViewModel1.class);
 
 
 
+        storesViewModel1.getAllStores().observe(this, new Observer<List<Store>>() {
+          @Override
+          public void onChanged(List<Store> stores) {
+              storesAdapter.setStoresList(storesList);
 
+          }
+      });
 
 
 
     }
 
-    private void networkRequest() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
-
-//         Call<List<Users>> callstores = apiService.getUsers();
-//        callstores.enqueue(new Callback<List<Users>>() {
-//            @Override
-//            public void onResponse(Call<List<Users>> call, Response<List<Users>> response) {
-//                if(response.isSuccessful()){
-//                    Log.d("In the Response_______" ," @@@@@@@@@@@");
-//                    storesRepository.insert(response.body());
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Users>> call, Throwable t) {
-//                     Toast.makeText(StoresActivity.this , "some thing went wrong   in the failure ",Toast.LENGTH_LONG).show();
-//                Log.d("In the Failure _______" ," @@@@@@@@@@@");
-//
-//
-//            }
-//        });
 
 
-    }
 }

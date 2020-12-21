@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -48,23 +49,21 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void to_stores(View view) {
         Intent myIntent = new Intent(HomeActivity.this, StoresActivity.class);
-
         startActivity(myIntent);
+        Log.e("Stores  clicked " , "stores");
+
     }
     public void to_items(View view) {
         Intent myIntent = new Intent(HomeActivity.this, ItemsActivity.class);
-
         startActivity(myIntent);
     }
     public void to_balances(View view) {
         Intent myIntent = new Intent(HomeActivity.this, LoginActivity.class);
-
         startActivity(myIntent);
     }
 
     public void to_store_issues(View view) {
         Intent myIntent = new Intent(HomeActivity.this, StockIssueActivity.class);
-
         startActivity(myIntent);
     }
     public void to_stock_rec(View view) {
