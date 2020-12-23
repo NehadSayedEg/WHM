@@ -40,8 +40,8 @@ public class LoginViewModel  extends AndroidViewModel {
     DataRepository dataRepository;
     LiveData<List<User>> getAllUsers;
 
-    MutableLiveData<AllData> storesMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
+   //MutableLiveData<AllData> storesMutableLiveData = new MutableLiveData<>();
+//    MutableLiveData<User> userMutableLiveData = new MutableLiveData<>();
 
     public LoginViewModel(@NonNull Application application, UserDao userDao) {
         super(application);
@@ -50,25 +50,28 @@ public class LoginViewModel  extends AndroidViewModel {
         getAllUsers = dataRepository.getGetAllUser();
     }
 
-
-    boolean checkValidLogin(String username, String password) {
-        return dataRepository.isValidAccount(username, password);
+//    boolean checkValidLogin(String username, String password) {
+//        return dataRepository.isValidAccount();
+//    }
+    public LiveData<Boolean>getUserLogin(){
+         return dataRepository.getAllUser();
     }
+
+//    public LiveData<List<User>>getAllUsers(){
+//        return getAllUsers();
+//
+//    }
 
     public void getData() {
         Client.getINSTANCE().getAllData().enqueue(new Callback<AllData>() {
             @Override
             public void onResponse(Call<AllData> call, Response<AllData> response) {
 
-                Log.e(" Hi From Response ", response.body().getData().getUsers().get(0).getUserNameAr().toString());
+//                Log.e(" Hi From Response ", response.body().getData().getUsers().get(0).getUserNameAr().toString());
 
                 dataRepository.insertUsers(response.body().getData().getUsers());
                 dataRepository.insertItem(response.body().getData().getItems());
                 dataRepository.insertStore(response.body().getData().getStores());
-
-                Log.e(" Items Size ", response.body().getData().getItems().size() + " items");
-
-                Log.e(" users Size ", response.body().getData().getUsers().size() + " user");
 
                 //   Toast.makeText(getApplicationContext(),  " Hi From Response",  Toast.LENGTH_LONG).show();
             }
@@ -81,19 +84,22 @@ public class LoginViewModel  extends AndroidViewModel {
     }
 
     public static class Factory implements ViewModelProvider.Factory {
-        private final Context ctxt;
         Application application;
         UserDao userDao;
 
-        Factory(Context ctxt) {
-            this.ctxt = ctxt.getApplicationContext();
+        public Factory( Application application, UserDao userDao) {
+            this.application = application;
+            this.userDao = userDao;
         }
+
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             return ((T) new LoginViewModel(application, userDao));
         }
+
+
     }
 }
 //                if(response.isSuccessful()) {

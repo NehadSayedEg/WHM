@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,11 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView textViewRegister;
     DataRepository dataRepository ;
     UserDao userDao ;
-
-
     LoginViewModel loginViewModel ;
     private LiveData<List<User>> getAllUsers ;
-
 
 
     @Override
@@ -55,14 +54,73 @@ public class LoginActivity extends AppCompatActivity {
 
         textViewRegister = findViewById(R.id.textViewRegister);
 
-
         //loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-      //  loginViewModel  = new ViewModelProvider(this).get(LoginViewModel.class);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModel.Factory(getApplicationContext())).get(LoginViewModel.class);
+        //  loginViewModel  = new ViewModelProvider(this).get(LoginViewModel.class);
 
+        userDao = appDatabase.getINSTANCE(getApplication()).userDao();
+        loginViewModel = new ViewModelProvider(this, new LoginViewModel.Factory(this.getApplication(), userDao)).get(LoginViewModel.class);
 
 
         loginViewModel.getData();
+//        buttonLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//
+//            }
+//        });
+        loginViewModel.getUserLogin().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+
+                buttonLogin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String username = editTextUserName.getText().toString();
+                        String password = editTextPassword.getText().toString();
+                        if(username.isEmpty() || password.isEmpty()){
+                            Toast.makeText(getApplicationContext() , "Fill all the fields" , Toast.LENGTH_LONG).show();
+                        }else {
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+                        }
+
+
+                    }
+                });
+            }
+        });
+
+
+
+    }
+
+
+}
+
+
+
+        //                String username = editTextUserName.getText().toString();
+//                String password = editTextPassword.getText().toString();
+//                if(username.isEmpty() || password.isEmpty()){
+//                    Toast.makeText(getApplicationContext() , "Fill all the fields" , Toast.LENGTH_LONG).show();
+//                }else {
+//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
+
+//                        boolean isValid = loginViewModel.checkValidLogin(editTextUserName.getText().toString(), editTextPassword.getText().toString());
+//                        if (isValid) {
+//                            Toast.makeText(getBaseContext(), "Successfully Logged In!", Toast.LENGTH_LONG).show();
+//                            Log.i("Successful_Login", "Login was successful");
+//                        } else {
+//                            Toast.makeText(getBaseContext(), "Invalid Login!", Toast.LENGTH_SHORT).show();
+//                            Log.i("Unsuccessful_Login", "Login was not successful");
+//                        }
+
+
+
+
 
 
 
@@ -98,54 +156,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-
-
-                boolean isValid = loginViewModel.checkValidLogin(editTextUserName.getText().toString(), editTextPassword.getText().toString());
-                if(isValid)
-                {
-                    Toast.makeText(getBaseContext(), "Successfully Logged In!", Toast.LENGTH_LONG).show();
-                    Log.i("Successful_Login", "Login was successful");
-                }
-                else
-                {
-                    Toast.makeText(getBaseContext(), "Invalid Login!", Toast.LENGTH_SHORT).show();
-                    Log.i("Unsuccessful_Login", "Login was not successful");
-                }
-            }
-        });
-
-    }
 
 
 
-//
-//    public void to_home(View view) {
-//
-//        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//    }
 
-//    public static class BalancesActivity extends AppCompatActivity {
-//        RecyclerView recyclerView2;
-//
-//        String s5[] ,s6[];
-//        int images3[] = {R.drawable.items ,R.drawable.items  ,R.drawable.items};
-//
-//        @Override
-//        protected void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_balances);
-//            recyclerView2 = findViewById(R.id.recyclerView2);
-//
-//            s5= getResources().getStringArray(R.array.Weights);
-//            s6 = getResources().getStringArray(R.array.dates);
-//
-//          //  StoresAdapter myAdapter3 = new StoresAdapter(this,s5 ,s6, images3);
-//          //  recyclerView2.setAdapter(myAdapter3);
-//           // recyclerView2.setLayoutManager(new LinearLayoutManager(this ));
-//        }
-//    }
-}

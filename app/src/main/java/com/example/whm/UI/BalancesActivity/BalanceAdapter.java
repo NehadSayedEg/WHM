@@ -17,7 +17,6 @@ import java.util.List;
 
 public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.BalanceViewHolder>{
 
-    //private ArrayList<Stores> storesList = new ArrayList<>();
     List<Item> itemList ;
     Context context;
 
@@ -30,7 +29,7 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.BalanceV
     @Override
     public BalanceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_item, parent,  false);
+        View view = inflater.inflate(R.layout.balance_item, parent,  false);
         return new BalanceAdapter.BalanceViewHolder(view);
     }
 
@@ -68,9 +67,9 @@ public class BalanceAdapter extends RecyclerView.Adapter<BalanceAdapter.BalanceV
 
         public BalanceViewHolder(@NonNull View itemView) {
             super(itemView);
-            store_name_en_tv = itemView.findViewById(R.id.store_name_en);
-            store_id_tv =itemView.findViewById(R.id.store_id);
-            store_imageView = itemView.findViewById(R.id.imageView);
+            store_name_en_tv = itemView.findViewById(R.id.item_name_en);
+            store_id_tv =itemView.findViewById(R.id.item_id);
+//            store_imageView = itemView.findViewById(R.id.imageView);
 
         }
     }

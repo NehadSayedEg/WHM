@@ -5,45 +5,35 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
-import com.example.whm.Database.Dao.AllDataDao;
-import com.example.whm.Database.Dao.DataDao;
 import com.example.whm.Database.Dao.ItemDao;
 import com.example.whm.Database.Dao.StoreDao;
 import com.example.whm.Database.Dao.UserDao;
 import com.example.whm.Database.appDatabase;
-import com.example.whm.Model.AllData;
-import com.example.whm.Model.Data;
 import com.example.whm.Model.Item;
 import com.example.whm.Model.Store;
 import com.example.whm.Model.User;
 
+import java.net.HttpCookie;
 import java.util.List;
 
 public class DataRepository {
 
     private appDatabase database ;
-    private LiveData<List<User>> getAllUser;
+    private  LiveData<List<User>> getAllUser;
     private LiveData<List<Item>> getAllitems;
     private LiveData<List<Store>> getAllStores;
+    String userName;
+    String password;
 
-
+    public MutableLiveData<Boolean>   booleanLiveData  =new MutableLiveData(false) ;
     private final UserDao userDao;
     private static DataRepository  instance;
-    private LiveData<User> userAccountLiveData;
-
-
-//    public DataRepository(Application application){
-//        database = appDatabase.getINSTANCE(application);
-//        getAllUser = database.userDao().getAllUsers();
-//        getAllitems = database.itemDao().getAllitems();
-//        getAllStores = database.storeDao().getAllStores();
-//
-//    }
-
 
     public DataRepository(Application application, UserDao userDao){
         database = appDatabase.getINSTANCE(application);
+
         this.userDao = userDao;
         getAllUser = database.userDao().getAllUsers();
         getAllitems = database.itemDao().getAllitems();
@@ -52,13 +42,35 @@ public class DataRepository {
     }
 
 
-    public boolean isValidAccount(String username, final String password)
-    {
-        User user = userDao.getAccount(username);
-        return user.getUserPassword().equals(password);
+    public   void isValidAccount(List<User> userList){
+        new isValidAccountAsyncTask(database ,userName , password).execute();
     }
 
-    public   void insertUsers(List<User> userList){
+
+    private  class isValidAccountAsyncTask extends AsyncTask<Void, Void, Boolean> {
+        UserDao userDao;
+        private String username;
+        private String password;
+        public isValidAccountAsyncTask( appDatabase appDatabase ,String username, String password) {
+            userDao = appDatabase.userDao();
+
+            //Prevent leak
+            this.username = username;
+            this.password = password;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            User user = userDao.getAccount(username);
+            return user.getUserPassword().equals(password);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            booleanLiveData.postValue(aBoolean);
+        }
+    }
+        public   void insertUsers(List<User> userList){
         new InsertUserAsyncTask(database).execute(userList);
     }
 
@@ -71,6 +83,9 @@ public class DataRepository {
         new InsertStoreAsyncTask(database).execute(storeList);
     }
 
+    public LiveData<Boolean> getAllUser(){
+        return  booleanLiveData ;
+    }
 
     public LiveData<List<User>> getGetAllUser(){
         return  getAllUser ;

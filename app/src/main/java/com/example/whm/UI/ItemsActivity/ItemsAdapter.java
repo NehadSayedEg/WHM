@@ -1,6 +1,7 @@
 package com.example.whm.UI.ItemsActivity;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,8 @@ import com.example.whm.R;
 
 import java.util.List;
 
-
-public class ItemsAdapter extends RecyclerView.Adapter<com.example.whm.UI.ItemsActivity.ItemsAdapter.ItemsViewHolder>{
-
-    //private ArrayList<Stores> storesList = new ArrayList<>();
-     List<Item> itemList ;
+public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder>{
+    private List<Item> itemList ;
     Context context;
 
     public ItemsAdapter(List<Item> itemList, Context context) {
@@ -30,7 +28,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<com.example.whm.UI.ItemsA
 
     @NonNull
     @Override
-    public com.example.whm.UI.ItemsActivity.ItemsAdapter.ItemsViewHolder  onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemsAdapter.ItemsViewHolder  onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_item, parent,  false);
         return new ItemsAdapter.ItemsViewHolder(view);
@@ -39,19 +37,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<com.example.whm.UI.ItemsA
 
     @Override
     public void onBindViewHolder(@NonNull ItemsViewHolder holder, int position) {
-        // Stores stores = storesList.get(position);
-//        holder.store_id_tv.setText(storesList.get(position).getUserId());
-        holder.store_name_en_tv.setText(itemList.get(position).getItemNameEn());
 
-
-        // holder.store_name_en_tv.setText(data1[position]);
-        // holder.store_id_tv.setText(data2[position]);
-        // holder.store_imageView.setImageResource(images[position]) ;
-
-
+        holder.item_name_en_tv.setText(itemList.get(position).getItemNameEn());
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -62,18 +50,17 @@ public class ItemsAdapter extends RecyclerView.Adapter<com.example.whm.UI.ItemsA
     public void setItemList(List<Item>itemsList){
         this.itemList = itemsList;
         notifyDataSetChanged();
-
+        Log.e("Store Sze list" , itemsList.size() +"size");
     }
 
     public static class ItemsViewHolder extends RecyclerView.ViewHolder{
-        TextView store_name_en_tv , store_id_tv;
+        TextView item_name_en_tv , item_id_tv;
         ImageView store_imageView;
 
         public ItemsViewHolder(@NonNull View itemView) {
             super(itemView);
-            store_name_en_tv = itemView.findViewById(R.id.store_name_en);
-            store_id_tv =itemView.findViewById(R.id.store_id);
-            store_imageView = itemView.findViewById(R.id.imageView);
+            item_name_en_tv = itemView.findViewById(R.id.item_name_en);
+            item_id_tv =itemView.findViewById(R.id.item_id);
 
         }
     }

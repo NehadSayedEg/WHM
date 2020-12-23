@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.whm.Database.Dao.UserDao;
 import com.example.whm.Database.Repository.StoresRepository;
 import com.example.whm.Model.Store;
 import com.example.whm.Model.Users;
@@ -36,6 +38,8 @@ public class StoresActivity extends AppCompatActivity {
     RecyclerView recyclerView ;
     StoresAdapter storesAdapter ;
     List<Store> storesList ;
+    UserDao userDao;
+    Context context ;
 
 
 
@@ -47,26 +51,30 @@ public class StoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stores);
         recyclerView = findViewById(R.id.stores_recyclerView);
-      //  storesAdapter = new StoresAdapter(this);
-        recyclerView.setAdapter(storesAdapter);
+      //  storesAdapter = new StoresAdapter((List<Store>) this, context );
+
+        storesViewModel1 = new ViewModelProvider(this, new StoresViewModel1.Factory(this.getApplication(), userDao)).get(StoresViewModel1.class);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        storesList = new ArrayList<>();
-
+      //  storesList = new ArrayList<>();
         storesAdapter = new StoresAdapter(storesList, this);
-       // storesViewModel1 = ViewModelProviders.of(this ).get(StoresViewModel1.class);
-        storesViewModel1  = new ViewModelProvider(this).get(StoresViewModel1.class);
+
+
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter( storesAdapter );
 
 
 
         storesViewModel1.getAllStores().observe(this, new Observer<List<Store>>() {
           @Override
           public void onChanged(List<Store> stores) {
-              storesAdapter.setStoresList(storesList);
+              Log.e("stores " , stores.get(1).getStoreNameAr());
+              storesAdapter.setStoresList(stores);
 
           }
       });

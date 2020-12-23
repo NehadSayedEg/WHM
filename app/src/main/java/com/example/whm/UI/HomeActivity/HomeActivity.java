@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.whm.UI.BalancesActivity.BalanceActivity;
 import com.example.whm.UI.ItemsActivity.ItemsActivity;
 import com.example.whm.UI.LoginActivity.LoginActivity;
 import com.example.whm.R;
@@ -58,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
     public void to_balances(View view) {
-        Intent myIntent = new Intent(HomeActivity.this, LoginActivity.class);
+        Intent myIntent = new Intent(HomeActivity.this, BalanceActivity.class);
         startActivity(myIntent);
     }
 

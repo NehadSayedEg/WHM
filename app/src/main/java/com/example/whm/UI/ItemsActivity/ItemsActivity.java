@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.whm.Database.Dao.UserDao;
 import com.example.whm.Database.Repository.DataRepository;
@@ -29,6 +30,7 @@ public class ItemsActivity extends AppCompatActivity {
     ItemsAdapter itemsAdapter ;
     DataRepository dataRepository ;
     List<Item> itemsList ;
+    UserDao userDao;
 
 
     @Override
@@ -36,27 +38,20 @@ public class ItemsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
         itemRecyclerView = findViewById(R.id.rv_items);
-
-
-        //  storesAdapter = new StoresAdapter(this);
-        itemRecyclerView.setAdapter(itemsAdapter);
+        itemsViewModel = new ViewModelProvider(this, new ItemsViewModel.Factory(this.getApplication(), userDao)).get(ItemsViewModel.class);
         itemRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
         itemRecyclerView.setItemAnimator(new DefaultItemAnimator());
         itemRecyclerView.setHasFixedSize(true);
-        itemsList = new ArrayList<>();
-
+       // itemsList = new ArrayList<>();
         itemsAdapter = new ItemsAdapter(itemsList, this);
-        // storesViewModel1 = ViewModelProviders.of(this ).get(StoresViewModel1.class);
-        itemsViewModel  = new ViewModelProvider(this).get(ItemsViewModel.class);
+        itemRecyclerView.setAdapter(itemsAdapter);
 
 
 
         itemsViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
+                Log.e(" Item " ,items.size()+ "itemsize");
                 itemsAdapter.setItemList(items);
 
             }

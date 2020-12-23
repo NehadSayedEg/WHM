@@ -1,6 +1,7 @@
 package com.example.whm.UI.StoresActivity;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +18,6 @@ import com.example.whm.R;
 import java.util.List;
 
 public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresViewHolder>{
-
-    //private ArrayList<Stores> storesList = new ArrayList<>();
     private List<Store> storesList ;
     Context context;
 
@@ -38,10 +37,7 @@ public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresView
 
     @Override
     public void onBindViewHolder(@NonNull StoresViewHolder holder, int position) {
-       // Stores stores = storesList.get(position);
-//        holder.store_id_tv.setText(storesList.get(position).getUserId());
         holder.store_name_en_tv.setText(storesList.get(position).getStoreNameAr());
-
 
         // holder.store_name_en_tv.setText(data1[position]);
        // holder.store_id_tv.setText(data2[position]);
@@ -51,6 +47,7 @@ public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresView
 
     @Override
     public int getItemCount() {
+
         return storesList.size();
     }
 
@@ -58,7 +55,7 @@ public class StoresAdapter extends RecyclerView.Adapter<StoresAdapter.StoresView
     public void setStoresList(List<Store>storesList){
         this.storesList = storesList;
         notifyDataSetChanged();
-
+        Log.e("Store Sze list" , storesList.size() +"size");
     }
 
     public static class StoresViewHolder extends RecyclerView.ViewHolder{
