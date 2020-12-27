@@ -12,7 +12,9 @@ import com.example.whm.Database.Dao.StoreDao;
 import com.example.whm.Database.Dao.UserDao;
 import com.example.whm.Database.appDatabase;
 import com.example.whm.Model.Item;
+import com.example.whm.Model.Shelf;
 import com.example.whm.Model.Store;
+import com.example.whm.Model.StoreWithShlefs;
 import com.example.whm.Model.User;
 
 import java.net.HttpCookie;
@@ -20,38 +22,42 @@ import java.util.List;
 
 public class DataRepository {
 
-    private appDatabase database ;
-    private  LiveData<List<User>> getAllUser;
+    private appDatabase database;
+    private LiveData<List<User>> getAllUser;
     private LiveData<List<Item>> getAllitems;
     private LiveData<List<Store>> getAllStores;
     String userName;
     String password;
 
-    public MutableLiveData<Boolean>   booleanLiveData  =new MutableLiveData(false) ;
+    public MutableLiveData<Boolean> booleanLiveData = new MutableLiveData(false);
     private final UserDao userDao;
-    private static DataRepository  instance;
+    private static DataRepository instance;
 
-    public DataRepository(Application application, UserDao userDao){
+
+    private StoreDao storeDao;
+
+    public DataRepository(Application application, UserDao userDao) {
         database = appDatabase.getINSTANCE(application);
 
         this.userDao = userDao;
         getAllUser = database.userDao().getAllUsers();
         getAllitems = database.itemDao().getAllitems();
         getAllStores = database.storeDao().getAllStores();
+        storeDao = database.storeDao();
 
     }
 
-
-    public   void isValidAccount(List<User> userList){
-        new isValidAccountAsyncTask(database ,userName , password).execute();
+    public void isValidAccount(List<User> userList) {
+        new isValidAccountAsyncTask(database, userName, password).execute();
     }
 
 
-    private  class isValidAccountAsyncTask extends AsyncTask<Void, Void, Boolean> {
+    private class isValidAccountAsyncTask extends AsyncTask<Void, Void, Boolean> {
         UserDao userDao;
         private String username;
         private String password;
-        public isValidAccountAsyncTask( appDatabase appDatabase ,String username, String password) {
+
+        public isValidAccountAsyncTask(appDatabase appDatabase, String username, String password) {
             userDao = appDatabase.userDao();
 
             //Prevent leak
@@ -70,42 +76,42 @@ public class DataRepository {
             booleanLiveData.postValue(aBoolean);
         }
     }
-        public   void insertUsers(List<User> userList){
+
+    public void insertUsers(List<User> userList) {
         new InsertUserAsyncTask(database).execute(userList);
     }
 
-    public   void insertItem(List<Item> itemList){
+    public void insertItem(List<Item> itemList) {
         new InsertItemAsyncTask(database).execute(itemList);
     }
 
 
-    public   void insertStore(List<Store> storeList){
+    public void insertStore(List<Store> storeList) {
         new InsertStoreAsyncTask(database).execute(storeList);
     }
 
-    public LiveData<Boolean> getAllUser(){
-        return  booleanLiveData ;
+    public LiveData<Boolean> getAllUser() {
+        return booleanLiveData;
     }
 
-    public LiveData<List<User>> getGetAllUser(){
-        return  getAllUser ;
-    }
-
-
-    public LiveData<List<Item>> getGetAllitem(){
-        return  getAllitems ;
-    }
-
-    public LiveData<List<Store>> getGetAllstore(){
-        return  getAllStores ;
+    public LiveData<List<User>> getGetAllUser() {
+        return getAllUser;
     }
 
 
+    public LiveData<List<Item>> getGetAllitem() {
+        return getAllitems;
+    }
 
-    static  class InsertUserAsyncTask extends AsyncTask<List<User> , Void , Void > {
-        private UserDao userDao ;
+    public LiveData<List<Store>> getGetAllstore() {
+        return getAllStores;
+    }
 
-        InsertUserAsyncTask( appDatabase appDatabase) {
+
+    static class InsertUserAsyncTask extends AsyncTask<List<User>, Void, Void> {
+        private UserDao userDao;
+
+        InsertUserAsyncTask(appDatabase appDatabase) {
             userDao = appDatabase.userDao();
         }
 
@@ -113,16 +119,16 @@ public class DataRepository {
         protected Void doInBackground(List<User>... lists) {
             userDao.insert(lists[0]);
             userDao.getAllUsers();
-            int ids=userDao.insertUser(lists[0]).length ;
+            int ids = userDao.insertUser(lists[0]).length;
             Log.e("data repo", ids + "user length");
             return null;
         }
     }
 
-    static  class InsertItemAsyncTask extends AsyncTask<List<Item> , Void , Void > {
-        private ItemDao itemDao ;
+    static class InsertItemAsyncTask extends AsyncTask<List<Item>, Void, Void> {
+        private ItemDao itemDao;
 
-        InsertItemAsyncTask( appDatabase appDatabase) {
+        InsertItemAsyncTask(appDatabase appDatabase) {
             itemDao = appDatabase.itemDao();
         }
 
@@ -135,10 +141,10 @@ public class DataRepository {
         }
     }
 
-    static  class InsertStoreAsyncTask extends AsyncTask<List<Store> , Void , Void > {
-        private StoreDao storeDao ;
+    static class InsertStoreAsyncTask extends AsyncTask<List<Store>, Void, Void> {
+        private StoreDao storeDao;
 
-        InsertStoreAsyncTask( appDatabase appDatabase) {
+        InsertStoreAsyncTask(appDatabase appDatabase) {
             storeDao = appDatabase.storeDao();
         }
 
@@ -148,8 +154,46 @@ public class DataRepository {
             return null;
         }
     }
+//
+//    static class InsertStoreAsyncTask extends AsyncTask<List<Store>, Void, Void> {
+//        private StoreDao storeDao;
+//
+//        InsertStoreAsyncTask(appDatabase appDatabase) {
+//            storeDao = appDatabase.storeDao();
+//        }
+//
+//        @Override
+//        protected Void doInBackground(List<Store>... lists) {
+//            storeDao.insert(lists[0]);
+//            return null;
+//        }
+//    }
+
+
+
+    public void insert(StoreWithShlefs StoreWithShlefs) {
+        new insertAsync(storeDao).execute(StoreWithShlefs);
+    }
+    private static class insertAsync extends AsyncTask<StoreWithShlefs, Void, Void> {
+        private StoreDao storeDao;
+
+        insertAsync(StoreDao storeDao) {
+            storeDao = storeDao;
+        }
+
+        @Override
+        protected Void doInBackground(StoreWithShlefs... storeWithShlefs) {
+
+            long identifier = storeDao.insertOneStore(storeWithShlefs[0].store);
+
+            for (Shelf shelf : storeWithShlefs[0].shelfList) {
+                shelf.setShelfId(identifier);
+            }
+            storeDao.insertShelf(storeWithShlefs[0].shelfList);
+            return null;
+        }
 
 
 
 
-}
+} }

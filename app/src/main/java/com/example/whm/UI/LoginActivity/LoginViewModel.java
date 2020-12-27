@@ -23,6 +23,8 @@ import com.example.whm.Model.AllData;
 import com.example.whm.Model.Data;
 import com.example.whm.Model.Item;
 import com.example.whm.Model.Store;
+import com.example.whm.Model.StoreType;
+import com.example.whm.Model.StoreWithShlefs;
 import com.example.whm.Model.User;
 import com.example.whm.Model.Users;
 import com.example.whm.Network.Client;
@@ -57,21 +59,25 @@ public class LoginViewModel  extends AndroidViewModel {
          return dataRepository.getAllUser();
     }
 
-//    public LiveData<List<User>>getAllUsers(){
-//        return getAllUsers();
-//
-//    }
+
+public void insertStoresWithShelfs(StoreWithShlefs storeWithShlefs){
+    dataRepository.insert(storeWithShlefs);
+}
 
     public void getData() {
         Client.getINSTANCE().getAllData().enqueue(new Callback<AllData>() {
             @Override
             public void onResponse(Call<AllData> call, Response<AllData> response) {
 
-//                Log.e(" Hi From Response ", response.body().getData().getUsers().get(0).getUserNameAr().toString());
+                Log.e(" Hi From Response ", response.body().getData().getUsers().get(0).getUserNameAr().toString());
+                Log.e(" Hi From Response ", response.body().getData().getShelfs().get(1).getShelfNameAr());
+
+
 
                 dataRepository.insertUsers(response.body().getData().getUsers());
                 dataRepository.insertItem(response.body().getData().getItems());
                 dataRepository.insertStore(response.body().getData().getStores());
+                dataRepository.insert(response.body().getData().getStores());
 
                 //   Toast.makeText(getApplicationContext(),  " Hi From Response",  Toast.LENGTH_LONG).show();
             }

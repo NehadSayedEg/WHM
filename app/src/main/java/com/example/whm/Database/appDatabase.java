@@ -10,21 +10,26 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.bumptech.glide.load.model.ByteArrayLoader;
-import com.example.whm.Database.Dao.AllDataDao;
-import com.example.whm.Database.Dao.DataDao;
+import com.example.whm.Database.Dao.DocumentTypeDao;
 import com.example.whm.Database.Dao.ItemDao;
+import com.example.whm.Database.Dao.ShelfDao;
 import com.example.whm.Database.Dao.StoreDao;
-import com.example.whm.Database.Dao.StoresDao;
+import com.example.whm.Database.Dao.StoretypeDao;
 import com.example.whm.Database.Dao.UserDao;
+import com.example.whm.Database.Dao.UserGroupDao;
 import com.example.whm.Model.AllData;
 import com.example.whm.Model.Data;
+import com.example.whm.Model.DocumentType;
 import com.example.whm.Model.Item;
+import com.example.whm.Model.Shelf;
 import com.example.whm.Model.Store;
+import com.example.whm.Model.StoreType;
 import com.example.whm.Model.User;
+import com.example.whm.Model.UserGroup;
 
 
-@Database( entities ={User.class , Data.class , Item.class , Store.class , AllData.class} , version = 4 )
+@Database( entities ={User.class , Data.class , Item.class , Store.class , AllData.class ,
+        DocumentType.class , Shelf.class  , StoreType.class , UserGroup.class} , version = 5 )
 @TypeConverters(Converters.class)
 public  abstract  class appDatabase extends RoomDatabase {
 
@@ -32,8 +37,14 @@ public  abstract  class appDatabase extends RoomDatabase {
     public  abstract ItemDao itemDao();
     public  abstract StoreDao storeDao();
     public  abstract UserDao userDao();
+    public  abstract StoretypeDao storetypeDao();
+    public  abstract UserGroupDao userGroupDao();
+    public  abstract ShelfDao shelfDao();
+    public  abstract DocumentTypeDao documentTypeDao();
 
-     private static volatile appDatabase INSTANCE ;
+
+
+    private static volatile appDatabase INSTANCE ;
 
      public  static appDatabase getINSTANCE(Context context){
          if(INSTANCE == null){
@@ -63,12 +74,25 @@ public  abstract  class appDatabase extends RoomDatabase {
         private UserDao userDao  ;
         private ItemDao itemDao  ;
         private StoreDao storeDao  ;
+        private ShelfDao shelfDao  ;
+        private StoretypeDao storetypeDao  ;
+        private DocumentTypeDao documentTypeDao  ;
+        private UserGroupDao userGroupDao  ;
+
+
+
+
 
 
         PopulateAsyncTask(appDatabase appDatabase){
             itemDao  =appDatabase.itemDao();
             userDao =appDatabase.userDao();
             storeDao= appDatabase.storeDao();
+            shelfDao = appDatabase.shelfDao();
+            userGroupDao = appDatabase.userGroupDao();
+            documentTypeDao = appDatabase.documentTypeDao();
+            storetypeDao = appDatabase.storetypeDao();
+
          }
 
          @Override
@@ -76,6 +100,10 @@ public  abstract  class appDatabase extends RoomDatabase {
              itemDao.deleteAllItems();
              userDao.deleteAllUsers();
              storeDao.deleteAllStores();
+             storetypeDao.deleteAllStoreType();
+             shelfDao.deleteAllShelf();
+             documentTypeDao.deleteAllDocumentType();
+             userGroupDao.deleteAllUserGroup();
              return null;
          }
      }

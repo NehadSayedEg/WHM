@@ -19,7 +19,7 @@
         <activity android:name=".UI.BalancesActivity.BalanceActivity"></activity>
         <activity android:name=".UI.StockTranActivity.StockTranActivity" />
         <activity android:name=".StockRecActivity" />
-        <activity android:name=".StockIssueActivity" />
+        <activity android:name=".UI.StockIssueActivity.StockIssueActivity" />
         <activity android:name=".UI.LoginActivity.LoginActivity$BalancesActivity" />
         <activity android:name=".UI.ItemsActivity.ItemsActivity" />
         <activity android:name=".UI.StoresActivity.StoresActivity" />

@@ -15,7 +15,6 @@ import java.util.List;
 
 public class Data {
 
-
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name ="id")
     private  int id;
@@ -37,6 +36,27 @@ public class Data {
     private List<Store> stores = null;
 
 
+    @ColumnInfo(name ="Shelfs")
+    @SerializedName("Shelfs")
+    @Expose
+    private List<Shelf> shelfs = null;
+
+
+    @ColumnInfo(name ="store_types")
+    @SerializedName("store_types")
+    @Expose
+    private List<StoreType> storeTypes = null;
+
+
+    @ColumnInfo(name ="user_group")
+    @SerializedName("user_group")
+    @Expose
+    private List<UserGroup> userGroupList = null;
+
+    @ColumnInfo(name ="document_types")
+    @SerializedName("document_types")
+    @Expose
+    private List<DocumentType> documentTypeList = null;
 
     public int getId() {
         return id;
@@ -70,4 +90,35 @@ public class Data {
         this.stores = stores;
     }
 
+    public List<Shelf> getShelfs() {
+        return shelfs;
+    }
+
+    public void setShelfs(List<Shelf> shelfs) {
+        this.shelfs = shelfs;
+    }
+
+    public List<StoreType> getStoreTypes() {
+        return storeTypes;
+    }
+
+    public void setStoreTypes(List<StoreType> storeTypes) {
+        this.storeTypes = storeTypes;
+    }
+
+    public List<UserGroup> getUserGroupList() {
+        return userGroupList;
+    }
+
+    public void setUserGroupList(List<UserGroup> userGroupList) {
+        this.userGroupList = userGroupList;
+    }
+
+    public List<DocumentType> getDocumentTypeList() {
+        return documentTypeList;
+    }
+
+    public void setDocumentTypeList(List<DocumentType> documentTypeList) {
+        this.documentTypeList = documentTypeList;
+    }
 }

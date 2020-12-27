@@ -3,9 +3,13 @@ package com.example.whm.Database;
 import androidx.room.TypeConverter;
 
 import com.example.whm.Model.Data;
+import com.example.whm.Model.DocumentType;
 import com.example.whm.Model.Item;
+import com.example.whm.Model.Shelf;
 import com.example.whm.Model.Store;
+import com.example.whm.Model.StoreType;
 import com.example.whm.Model.User;
+import com.example.whm.Model.UserGroup;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
@@ -65,6 +69,60 @@ public class Converters {
     @TypeConverter
     public List<Store>  fromStringToStore (String stringStore){
         return (List<Store>) new Gson().fromJson(stringStore ,Store.class );
+
+    }
+
+
+    @TypeConverter
+    public String fromDocumentTypeToString( List<DocumentType> documentType){
+        return new Gson().toJson(documentType);
+
+    }
+
+    @TypeConverter
+    public List<DocumentType>  fromStringToDocumentType (String stringDocumentType){
+        return (List<DocumentType>) new Gson().fromJson(stringDocumentType ,DocumentType.class );
+
+    }
+
+
+    @TypeConverter
+    public String fromShelfToString( List<Shelf> shelfList){
+        return new Gson().toJson(shelfList);
+
+    }
+
+
+    @TypeConverter
+    public List<Shelf>  fromStringToShelf (String stringShelf){
+        return (List<Shelf>) new Gson().fromJson(stringShelf ,Shelf.class );
+
+    }
+
+
+    @TypeConverter
+    public String fromUserGroupToString( List<UserGroup> UserGroupList){
+        return new Gson().toJson(UserGroupList);
+
+    }
+
+    @TypeConverter
+    public List<UserGroup>  fromStringToUserGroup (String stringUserGroup){
+        return (List< UserGroup>) new Gson().fromJson(stringUserGroup ,UserGroup.class );
+
+    }
+
+
+
+    @TypeConverter
+    public String fromStoreTypeToString( List<StoreType> storeTypeList){
+        return new Gson().toJson(storeTypeList);
+
+    }
+
+    @TypeConverter
+    public List<StoreType>  fromStringToStoreType (String stringStoreType){
+        return (List< StoreType>) new Gson().fromJson(stringStoreType ,StoreType.class );
 
     }
 }

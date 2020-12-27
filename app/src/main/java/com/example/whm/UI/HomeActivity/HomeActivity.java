@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 import com.example.whm.UI.BalancesActivity.BalanceActivity;
 import com.example.whm.UI.ItemsActivity.ItemsActivity;
-import com.example.whm.UI.LoginActivity.LoginActivity;
 import com.example.whm.R;
-import com.example.whm.StockIssueActivity;
+import com.example.whm.UI.StockIssueActivity.StockIssueActivity;
 import com.example.whm.StockRecActivity;
 import com.example.whm.UI.StockTranActivity.StockTranActivity;
 import com.example.whm.UI.StoresActivity.StoresActivity;

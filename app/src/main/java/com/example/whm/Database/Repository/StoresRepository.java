@@ -6,10 +6,8 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.example.whm.Database.Dao.StoreDao;
-import com.example.whm.Database.Dao.StoresDao;
 import com.example.whm.Database.appDatabase;
 import com.example.whm.Model.Store;
-import com.example.whm.Model.Users;
 
 import java.util.List;
 
